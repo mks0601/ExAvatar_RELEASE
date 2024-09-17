@@ -196,12 +196,3 @@ class ArmRGBReg(nn.Module):
         loss = (rgb[:,is_lower_arm,:] - rgb[:,upper_arm_idx,:].view(batch_size,int(is_lower_arm.sum()),top_k,3).mean(2).detach()) ** 2
         return loss
        
-class SceneHumanDepthLoss(nn.Module):
-    def __init__(self):
-        super(SceneHumanDepthLoss, self).__init__()
-    
-    def forward(self, depthmap_scene, depthmap_human):
-        is_fg = depthmap_human > 0
-        diff = (depthmap_scene - depthmap_human.detach()) * is_fg # this should be positive as human should be the foreground. only regularizer scene depth map
-        loss = torch.clamp(-diff, min=0) # penalize negative diff
-        return loss
