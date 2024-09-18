@@ -35,14 +35,7 @@ class Custom(torch.utils.data.Dataset):
             frame_idx_list.append(frame_idx)
 
         # load camera parameters
-        if len(glob(osp.join(self.root_path, 'cam_params', '*.json'))) > 0:
-            self.scene_from_colmap = False
-            cam_param_path_list = glob(osp.join(self.root_path, 'cam_params', '*.json'))
-            for cam_param_path in cam_param_path_list:
-                frame_idx = int(cam_param_path.split('/')[-1][:-5])
-                with open(cam_param_path) as f:
-                    cam_params[frame_idx] = {k: np.array(v, dtype=np.float32) for k,v in json.load(f).items()}
-        elif osp.isfile(osp.join(self.root_path, 'sprase', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sprase', 'images.txt')):
+        if osp.isfile(osp.join(self.root_path, 'sparse', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sparse', 'images.txt')):
             self.scene_from_colmap = True
             with open(osp.join(self.root_path, 'sparse', 'cameras.txt')) as f:
                 lines = f.readlines()
@@ -67,6 +60,13 @@ class Custom(torch.utils.data.Dataset):
                 R = quaternion_to_matrix(torch.FloatTensor([qw, qx, qy, qz])).numpy()
                 t = np.array([tx, ty, tz], dtype=np.float32)
                 cam_params[frame_idx] = {'R': R, 't': t, 'focal': focal, 'princpt': princpt}
+        elif len(glob(osp.join(self.root_path, 'cam_params', '*.json'))) > 0:
+            self.scene_from_colmap = False
+            cam_param_path_list = glob(osp.join(self.root_path, 'cam_params', '*.json'))
+            for cam_param_path in cam_param_path_list:
+                frame_idx = int(cam_param_path.split('/')[-1][:-5])
+                with open(cam_param_path) as f:
+                    cam_params[frame_idx] = {k: np.array(v, dtype=np.float32) for k,v in json.load(f).items()}
         else:
             assert 0, 'camera parameters are not available'
 
@@ -98,17 +98,7 @@ class Custom(torch.utils.data.Dataset):
 
         # load point cloud of background scene
         scene = []
-        if osp.isfile(osp.join(self.root_path, 'bkg_point_cloud.txt')):
-            with open(osp.join(self.root_path, 'bkg_point_cloud.txt')) as f:
-                lines = f.readlines()
-            for line in lines:
-                splitted = line.split()
-                xyz = torch.FloatTensor([float(splitted[0]), float(splitted[1]), float(splitted[2])])
-                rgb = torch.FloatTensor([float(splitted[3]), float(splitted[4]), float(splitted[5])]) / 255
-                scene.append(torch.cat((xyz, rgb)))
-            scene = torch.stack(scene)
-            scene = scene[torch.rand(len(scene)) > 0.8,:] # randomly sample partial points
-        elif osp.isfile(osp.join(self.root_path, 'sprase', 'points3D.txt')):
+        if osp.isfile(osp.join(self.root_path, 'sparse', 'points3D.txt')):
             with open(osp.join(self.root_path, 'sparse', 'points3D.txt')) as f:
                 lines = f.readlines()
             for line in lines:
@@ -121,6 +111,16 @@ class Custom(torch.utils.data.Dataset):
             scene = torch.stack(scene)
             is_valid = scene[:,2] < torch.quantile(scene[:,2], 0.95) # remove outliers
             scene = scene[is_valid,:]
+        elif osp.isfile(osp.join(self.root_path, 'bkg_point_cloud.txt')):
+            with open(osp.join(self.root_path, 'bkg_point_cloud.txt')) as f:
+                lines = f.readlines()
+            for line in lines:
+                splitted = line.split()
+                xyz = torch.FloatTensor([float(splitted[0]), float(splitted[1]), float(splitted[2])])
+                rgb = torch.FloatTensor([float(splitted[3]), float(splitted[4]), float(splitted[5])]) / 255
+                scene.append(torch.cat((xyz, rgb)))
+            scene = torch.stack(scene)
+            scene = scene[torch.rand(len(scene)) > 0.8,:] # randomly sample partial points
         else:
             assert 0, 'Background point cloud is not available'
 
