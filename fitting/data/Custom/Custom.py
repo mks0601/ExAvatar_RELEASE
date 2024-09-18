@@ -41,7 +41,7 @@ class Custom(torch.utils.data.Dataset):
             frame_idx_list.append(int(frame_idx))
         
         # check if camera parameters from COLMAP are available
-        if osp.isfile(osp.join(self.root_path, 'sprase', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sprase', 'images.txt')):
+        if osp.isfile(osp.join(self.root_path, 'sparse', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sparse', 'images.txt')):
             cam_params_from_colmap = True
             with open(osp.join(self.root_path, 'sparse', 'cameras.txt')) as f:
                 lines = f.readlines()
