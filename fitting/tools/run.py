@@ -1,5 +1,6 @@
 import os
 import os.path as osp
+from glob import glob
 import argparse
 
 def parse_args():
@@ -16,6 +17,16 @@ if root_path[-1] == '/':
     subject_id = root_path.split('/')[-2]
 else:
     subject_id = root_path.split('/')[-1]
+
+# remove unnecessary frames
+with open(osp.join(root_path, 'frame_list_all.txt')) as f:
+    frame_idx_list = [int(x) for x in f.readlines()]
+img_path_list = glob(osp.join(root_path, 'frames', '*.png'))
+for img_path in img_path_list:
+    frame_idx = int(img_path.split('/')[-1][:-4])
+    if frame_idx not in frame_idx_list:
+        cmd = 'rm ' + img_path
+        os.system(cmd)
 
 # make camera parameters
 cmd = 'python make_virtual_cam_params.py --root_path ' + root_path
