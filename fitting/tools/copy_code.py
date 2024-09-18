@@ -18,7 +18,7 @@ cmd = 'cp ' + osp.join(src_path, 'run_hand4whole.py') + ' ./Hand4Whole_RELEASE/d
 os.system(cmd)
 
 # mmpose
-cmd = 'cp ' + osp.join(src_path, 'mmpose', 'demo', 'topdown_demo_with_mmdet.py') + ' ' + './mmpose/demo/.'
+cmd = 'cp ' + osp.join(src_path, 'mmpose', 'demo', 'topdown_demo_with_mmdet.py') + ' ./mmpose/demo/.'
 os.system(cmd)
 cmd = 'cp ' + osp.join(src_path, 'run_mmpose.py') + ' ./mmpose/.'
 os.system(cmd)
