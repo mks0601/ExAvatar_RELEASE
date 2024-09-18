@@ -21,6 +21,7 @@ ${ROOT}
 |-- |-- |-- flame/FLAME_NEUTRAL.pkl
 |-- |-- |-- flame/flame_static_embedding.pkl
 |-- |-- |-- flame/FLAME_texture.npz
+|-- |-- |-- flame/2019/generic_model.pkl
 |-- data
 |-- |-- Custom
 |-- |-- |-- data
@@ -45,7 +46,7 @@ ${ROOT}
 |-- output
 ```
 * `main` contains high-level code for the fitting and configurations.
-* `common` contains kernel code. Download SMPL-X 1.1 version from [here](https://smpl-x.is.tue.mpg.de/download.php). Download FLAME 2020 version from [here](https://flame.is.tue.mpg.de/download.php).
+* `common` contains kernel code. Download SMPL-X 1.1 version from [here](https://smpl-x.is.tue.mpg.de/download.php). Download FLAME 2019 and 2020 version from [here](https://flame.is.tue.mpg.de/download.php).
 * `data` contains data loading code.
 * `tools` contains pre-processing code.
 * `output` contains log, visualized outputs, and fitting result.
