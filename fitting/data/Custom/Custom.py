@@ -9,7 +9,7 @@ from utils.smpl_x import smpl_x
 from utils.flame import flame
 from utils.preprocessing import load_img, get_bbox, set_aspect_ratio, get_patch_img
 from utils.transforms import change_kpt_name
-from pytorch3d.transforms import axis_angle_to_matrix, matrix_to_axis_angle
+from pytorch3d.transforms import axis_angle_to_matrix, matrix_to_axis_angle, quaternion_to_matrix
 from pytorch3d.ops import corresponding_points_alignment
 import json
 import math
@@ -42,6 +42,7 @@ class Custom(torch.utils.data.Dataset):
         
         # check if camera parameters from COLMAP are available
         if osp.isfile(osp.join(self.root_path, 'sparse', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sparse', 'images.txt')):
+            print('Load camera parameters from COLMAP')
             cam_params_from_colmap = True
             with open(osp.join(self.root_path, 'sparse', 'cameras.txt')) as f:
                 lines = f.readlines()
@@ -57,16 +58,19 @@ class Custom(torch.utils.data.Dataset):
             for line in lines:
                 if line[0] == '#':
                     continue
-                if 'png' not in line:
+                if ('png' in line) or ('jpg' in line):
+                    pass
+                else:
                     continue
                 splitted = line.split()
-                frame_idx = int(splitted[-1][:-4])
+                frame_idx = int(splitted[-1][5:-4])
                 qw, qx, qy, qz = float(splitted[1]), float(splitted[2]), float(splitted[3]), float(splitted[4])
                 tx, ty, tz = float(splitted[5]), float(splitted[6]), float(splitted[7])
                 R = quaternion_to_matrix(torch.FloatTensor([qw, qx, qy, qz])).numpy()
                 t = np.array([tx, ty, tz], dtype=np.float32)
                 cam_params[frame_idx] = {'R': R, 't': t, 'focal': focal, 'princpt': princpt}
         else:
+            print('Load virtual camera parameters')
             cam_params_from_colmap = False
        
         for i in range(len(frame_idx_list)):
