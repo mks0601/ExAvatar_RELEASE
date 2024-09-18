@@ -50,11 +50,11 @@ for output_path in output_path_list:
 # add original image and frame index to the video
 output_path_list = glob(osp.join(output_root, '*.png'))
 img_height, img_width = cv2.imread(output_path_list[0]).shape[:2]
+frame_idx_list = sorted([int(x.split('/')[-1][:-4]) for x in glob(osp.join(output_root, '*.png'))])
 video_save = cv2.VideoWriter(osp.join(root_path, 'keypoints_whole_body.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), 30, (img_width*2, img_height)) 
-for output_path in output_path_list:
-    frame_idx = int(output_path.split('/')[-1][:-4])
+for frame_idx in frame_idx_list:
     img = cv2.imread(osp.join(root_path, 'frames', str(frame_idx) + '.png'))
-    output = cv2.imread(output_path)
+    output = cv2.imread(osp.join(output_root, str(frame_idx) + '.png'))
     vis = np.concatenate((img, output),1)
     vis = cv2.putText(vis, str(frame_idx), (int(img_width*0.1), int(img_height*0.1)), cv2.FONT_HERSHEY_PLAIN, 2.0, (0,0,255), 3)
     video_save.write(vis)
