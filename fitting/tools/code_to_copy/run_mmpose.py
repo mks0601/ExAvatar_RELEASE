@@ -16,18 +16,6 @@ def parse_args():
     assert args.root_path, "Please set root_path."
     return args
 
-def load_output(path, frame_idx_list):
-    kpts = {}
-    with open(path) as f:
-        _kpts = json.load(f)
-    for i in range(len(_kpts['instance_info'])):
-        frame_idx = kpts['instance_info'][i]['frame_id'] - 1 # 1-based -> 0-based
-        frame_idx = frame_idx_list[frame_idx]
-        xy = np.array(_kpts['instance_info'][i]['instances'][0]['keypoints'], dtype=np.float32).reshape(-1,2)
-        score = np.array(_kpts['instance_info'][i]['instances'][0]['keypoint_scores'], dtype=np.float32).reshape(-1,1)
-        kpts[frame_idx] = np.concatenate((xy, score),1)
-    return kpts
-
 args = parse_args()
 root_path = args.root_path
 
