@@ -9,6 +9,7 @@ from utils.smpl_x import smpl_x
 from utils.flame import flame
 from utils.preprocessing import load_img, get_bbox 
 from utils.transforms import transform_joint_to_other_db
+from pytorch3d.transforms import quaternion_to_matrix
 import json
 
 class Custom(torch.utils.data.Dataset):
@@ -36,6 +37,7 @@ class Custom(torch.utils.data.Dataset):
 
         # load camera parameters
         if osp.isfile(osp.join(self.root_path, 'sparse', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sparse', 'images.txt')):
+            print('Load camera parameters from COLMAP')
             self.scene_from_colmap = True
             with open(osp.join(self.root_path, 'sparse', 'cameras.txt')) as f:
                 lines = f.readlines()
@@ -51,16 +53,19 @@ class Custom(torch.utils.data.Dataset):
             for line in lines:
                 if line[0] == '#':
                     continue
-                if 'png' not in line:
+                if ('png' in line) or ('jpg' in line):
+                    pass
+                else:
                     continue
                 splitted = line.split()
-                frame_idx = int(splitted[-1][:-4])
+                frame_idx = int(splitted[-1][5:-4])
                 qw, qx, qy, qz = float(splitted[1]), float(splitted[2]), float(splitted[3]), float(splitted[4])
                 tx, ty, tz = float(splitted[5]), float(splitted[6]), float(splitted[7])
                 R = quaternion_to_matrix(torch.FloatTensor([qw, qx, qy, qz])).numpy()
                 t = np.array([tx, ty, tz], dtype=np.float32)
                 cam_params[frame_idx] = {'R': R, 't': t, 'focal': focal, 'princpt': princpt}
         elif len(glob(osp.join(self.root_path, 'cam_params', '*.json'))) > 0:
+            print('Load virtual camera parameters')
             self.scene_from_colmap = False
             cam_param_path_list = glob(osp.join(self.root_path, 'cam_params', '*.json'))
             for cam_param_path in cam_param_path_list:
@@ -99,6 +104,7 @@ class Custom(torch.utils.data.Dataset):
         # load point cloud of background scene
         scene = []
         if osp.isfile(osp.join(self.root_path, 'sparse', 'points3D.txt')):
+            print('Load background point cloud from COLMAP')
             with open(osp.join(self.root_path, 'sparse', 'points3D.txt')) as f:
                 lines = f.readlines()
             for line in lines:
@@ -112,6 +118,7 @@ class Custom(torch.utils.data.Dataset):
             is_valid = scene[:,2] < torch.quantile(scene[:,2], 0.95) # remove outliers
             scene = scene[is_valid,:]
         elif osp.isfile(osp.join(self.root_path, 'bkg_point_cloud.txt')):
+            print('Load background point cloud from monocular depth estimator')
             with open(osp.join(self.root_path, 'bkg_point_cloud.txt')) as f:
                 lines = f.readlines()
             for line in lines:
