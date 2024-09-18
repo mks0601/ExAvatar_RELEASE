@@ -148,29 +148,30 @@ def main():
             face_texture_mask = out['face_texture_mask'].detach().cpu().numpy()
             for i in range(batch_size):
                 frame_idx = int(data['frame_idx'][i])
-
+                
                 # mesh
-                save_ply(osp.join(save_root_path, 'smplx_wo_pose_wo_expr.ply'), torch.FloatTensor(smplx_mesh_wo_pose_wo_expr[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                save_ply(osp.join(save_root_path, 'smplx_wo_pose_wo_expr_wo_fo.ply'), torch.FloatTensor(smplx_mesh_wo_pose_wo_expr_wo_fo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                save_ply(osp.join(save_root_path, 'flame_wo_pose_wo_expr.ply'), torch.FloatTensor(flame_mesh_wo_pose_wo_expr[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
+                if (itr_data == 0) and (i == 0):
+                    save_ply(osp.join(save_root_path, 'smplx_wo_pose_wo_expr.ply'), torch.FloatTensor(smplx_mesh_wo_pose_wo_expr[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
+                    save_ply(osp.join(save_root_path, 'smplx_wo_pose_wo_expr_wo_fo.ply'), torch.FloatTensor(smplx_mesh_wo_pose_wo_expr_wo_fo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
+                    save_ply(osp.join(save_root_path, 'flame_wo_pose_wo_expr.ply'), torch.FloatTensor(flame_mesh_wo_pose_wo_expr[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
                 save_path = osp.join(save_root_path, 'meshes')
                 os.makedirs(save_path, exist_ok=True)
                 save_ply(osp.join(save_path, str(frame_idx) + '_smplx.ply'), torch.FloatTensor(smplx_mesh_cam[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_jo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_fo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                save_ply(osp.join(save_path, str(frame_idx) + '_flame.ply'), torch.FloatTensor(flame_mesh_cam[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
+                #save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_jo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
+                #save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_fo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
+                #save_ply(osp.join(save_path, str(frame_idx) + '_flame.ply'), torch.FloatTensor(flame_mesh_cam[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
 
                 # render
                 save_path = osp.join(save_root_path, 'renders')
                 os.makedirs(save_path, exist_ok=True)
                 render_smplx = render_mesh(smplx_mesh_cam[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
                 cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx.jpg'), render_smplx)
-                render_smplx_wo_jo = render_mesh(smplx_mesh_cam_wo_jo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.jpg'), render_smplx_wo_jo)
-                render_smplx_wo_fo = render_mesh(smplx_mesh_cam_wo_fo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.jpg'), render_smplx_wo_fo)
-                render_flame = render_mesh(flame_mesh_cam[i].numpy(), flame.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                cv2.imwrite(osp.join(save_path, str(frame_idx) + '_flame.jpg'), render_flame)
+                #render_smplx_wo_jo = render_mesh(smplx_mesh_cam_wo_jo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
+                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.jpg'), render_smplx_wo_jo)
+                #render_smplx_wo_fo = render_mesh(smplx_mesh_cam_wo_fo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
+                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.jpg'), render_smplx_wo_fo)
+                #render_flame = render_mesh(flame_mesh_cam[i].numpy(), flame.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
+                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_flame.jpg'), render_flame)
 
                 # smplx parameter
                 save_path = osp.join(save_root_path, 'smplx_params')
@@ -185,21 +186,22 @@ def main():
                             'rhand_pose': rotation_6d_to_axis_angle(smplx_params[frame_idx]['rhand_pose'].detach().cpu()).numpy().tolist(), \
                             'expr': smplx_params[frame_idx]['expr'].detach().cpu().numpy().tolist(), \
                             'trans': smplx_trans[i].tolist()}, f)
-                # shape parameter
-                with open(osp.join(save_root_path, 'shape_param.json'), 'w') as f:
-                    json.dump(smplx_shape.detach().cpu().numpy().tolist(), f)
-                # face offset
-                _face_offset = smpl_x.get_face_offset(face_offset[None,:,:])[0]
-                with open(osp.join(save_root_path, 'face_offset.json'), 'w') as f:
-                    json.dump(_face_offset.detach().cpu().numpy().tolist(), f)
-                # joint offset
-                _joint_offset = smpl_x.get_joint_offset(joint_offset[None,:,:])[0]
-                with open(osp.join(save_root_path, 'joint_offset.json'), 'w') as f:
-                    json.dump(_joint_offset.detach().cpu().numpy().tolist(), f)
-                # locaotr offset
-                _locator_offset = smpl_x.get_locator_offset(locator_offset[None,:,:])[0]
-                with open(osp.join(save_root_path, 'locator_offset.json'), 'w') as f:
-                    json.dump(_locator_offset.detach().cpu().numpy().tolist(), f)
+                if (itr_data == 0) and (i == 0):
+                    # shape parameter
+                    with open(osp.join(save_root_path, 'shape_param.json'), 'w') as f:
+                        json.dump(smplx_shape.detach().cpu().numpy().tolist(), f)
+                    # face offset
+                    _face_offset = smpl_x.get_face_offset(face_offset[None,:,:])[0]
+                    with open(osp.join(save_root_path, 'face_offset.json'), 'w') as f:
+                        json.dump(_face_offset.detach().cpu().numpy().tolist(), f)
+                    # joint offset
+                    _joint_offset = smpl_x.get_joint_offset(joint_offset[None,:,:])[0]
+                    with open(osp.join(save_root_path, 'joint_offset.json'), 'w') as f:
+                        json.dump(_joint_offset.detach().cpu().numpy().tolist(), f)
+                    # locaotr offset
+                    _locator_offset = smpl_x.get_locator_offset(locator_offset[None,:,:])[0]
+                    with open(osp.join(save_root_path, 'locator_offset.json'), 'w') as f:
+                        json.dump(_locator_offset.detach().cpu().numpy().tolist(), f)
 
                 # face unwrapped texture
                 face_texture_save += face_texture[i]
