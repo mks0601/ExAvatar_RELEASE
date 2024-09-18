@@ -31,7 +31,7 @@ class Custom(torch.utils.data.Dataset):
         self.get_flame_root_init() # get initial flame root pose and translation
 
     def load_data(self):
-        cam_params, img_paths, kpts, smplx_params, flame_params, flame_shape_params = {}, {}, {}, {}, {}, []
+        cam_params, img_paths, kpts, smplx_params, flame_params = {}, {}, {}, {}, {}
         frame_idx_list = []
 
         # read frame idxs
@@ -109,11 +109,9 @@ class Custom(torch.utils.data.Dataset):
                 else:
                     flame_param[k] = torch.FloatTensor(v)
             flame_params[frame_idx] = flame_param
-            with open(osp.join(self.root_path, 'flame_init', 'shape_param.json')) as f:
-                flame_shape_params.append(torch.FloatTensor(json.load(f)))
 
-        # average flame shape parameter
-        flame_shape_param = torch.stack(flame_shape_params).mean(0)
+        with open(osp.join(self.root_path, 'flame_init', 'shape_param.json')) as f:
+            flame_shape_param = torch.FloatTensor(json.load(f))
         return cam_params, img_paths, kpts, smplx_params, flame_params, flame_shape_param, frame_idx_list
     
     def get_smplx_trans_init(self):
