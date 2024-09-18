@@ -24,9 +24,10 @@ os.makedirs(osp.join(colmap_path, 'sparse'), exist_ok=True)
 os.system('rm -rf ' + osp.join(colmap_path, 'sparse', '*'))
 
 # prepare inputs of COLMAP (images/imageN.jpg)
-img_path_list = glob(osp.join(root_path, 'frames', '*.png'))
-for img_path in img_path_list:
-    frame_idx = int(img_path.split('/')[-1][:-4])
+with open(osp.join(root_path, 'frame_list_all.txt')) as f:
+    frame_idx_list = [int(x) for x in f.readlines()]
+for frame_idx in frame_idx_list:
+    img_path = osp.join(root_path, 'frames', str(frame_idx) + '.png')
     img = cv2.imread(img_path)
     cv2.imwrite(osp.join(colmap_path, 'images', 'image' + str(frame_idx) + '.jpg'), img)
 
