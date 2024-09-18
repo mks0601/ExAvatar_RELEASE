@@ -69,7 +69,9 @@ def main():
     at_point_cam = mesh_cam.mean(0)
     at_point = torch.matmul(torch.inverse(cam_param['R']), (at_point_cam - cam_param['t']))
     cam_pos = torch.matmul(torch.inverse(cam_param['R']), -cam_param['t'].view(3,1)).view(3)
-   
+
+    save_path = './neutral_pose'
+    os.makedirs(save_path, exist_ok=True)
     view_num = 50
     for i in range(view_num):
         azim = math.pi + math.pi*2*i/view_num # azim angle of the camera
@@ -82,11 +84,11 @@ def main():
         with torch.no_grad():
             human_asset, human_asset_refined, human_offset, mesh_neutral_pose = tester.model.module.human_gaussian(smplx_param, cam_param)
             human_render = tester.model.module.gaussian_renderer(human_asset, render_shape, cam_param_rot)
-        cv2.imwrite(str(i) + '.png', human_render['img'].cpu().numpy().transpose(1,2,0)[:,:,::-1]*255)
+        cv2.imwrite(osp.join(save_path, str(i) + '.png'), human_render['img'].cpu().numpy().transpose(1,2,0)[:,:,::-1]*255)
     
     xyz = human_asset['mean_3d']
     rgb = human_asset['rgb'].cpu() * 255
-    with open('rgb.txt', 'w') as f:
+    with open(osp.join(save_path, 'rgb.txt'), 'w') as f:
         for i in range(smpl_x.vertex_num_upsampled):
             f.write(str(float(xyz[i][0])) + ' ' + str(float(xyz[i][1])) + ' ' + str(float(xyz[i][2])) + ' ' + str(float(rgb[i][0])) + ' ' + str(float(rgb[i][1])) + ' ' + str(float(rgb[i][2])) + '\n')
 
