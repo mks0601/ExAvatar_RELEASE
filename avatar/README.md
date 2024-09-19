@@ -54,6 +54,7 @@ ${ROOT}
 ## Preprocessing of NeuMan videos
 * You can download original NeuMan data from [here](https://github.com/apple/ml-neuman).
 * We provide pre-processed Neuman data in [here](https://drive.google.com/drive/folders/15-V9EG21hT4pVhuBdHY3-lpvKjCuHbEU?usp=sharing).
+* We provide train/test/validation split files in [here](https://drive.google.com/drive/folders/1L5KC4QIRX_ljQ_vyrIXV11FgynnuCDb8?usp=sharing), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
 * We used the same pre-processing stage of the above one for the custom videos.
 
 ## Train
