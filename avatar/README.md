@@ -44,7 +44,7 @@ ${ROOT}
 ## Preprocessing of custom videos (your own video)
 * We recommend capturing your own video outdoor as inside usually has too strong illuminations, which cast strong shadows. The less strong shadow, the better.
 * Place your video at `data/Custom/data/$SUBJECT_ID/video.mp4`.
-* Get optimized and smoothed SMPL-X parameters with [here](../fitting/). We recommend downsampling the video to 5 fps to remove redundancy and make the pipeline faster.
+* Get optimized and smoothed SMPL-X parameters with [here](../fitting/).
 * Go to `segment-anything` folder in `../fitting/tools` and run `python run_sam.py --root_path ../../data/Custom/data/$SUBJECT_ID` to obtain foreground masks.
 * (Background option 1) If background of your own video is static, we get background point cloud with monocular depth estimator. To this end, go to `Depth-Anything-V2` folder in `../fitting/tools` and run `python run_depth_anything.py --root_path ../../data/Custom/data/$SUBJECT_ID`, which outputs `bkg_point_cloud.txt` at `data/Custom/data/$SUBJECT_ID`.
 * (Background option 2) If background of your own video is dynamic (like NeuMan videos), go to `../fitting/tools/COLMAP` and run `python run_colmap.py --root_path ../../data/Custom/data/$SUBJECT_ID`. It will output `sparse` folder at `data/Custom/data/$SUBJECT_ID`.
