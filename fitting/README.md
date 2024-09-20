@@ -59,7 +59,7 @@ ${ROOT}
 * Go to `data/Custom/data/$SUBJECT_ID` and make `frame_list_all.txt`, which includes frame indices to use for the fitting. We recommend to use frames where most of human is visible without being truncated. Each line should contain a frame index and a new line, for example '1\n'.
 * Set `dataset = 'Custom'` in `main/config.py`.
 * Go to `tools` folder and run `python run.py --root_path ../data/Custom/data/$SUBJECT_ID`. This will output virtual camera parameters, initial FLAME parameters, initial SMPL-X parameters, and 2D whole-body keypoints, and optimized/smoothed SMPL-X parameters at `data/Custom/data/$SUBJECT_ID`.
-* We provide an example of pre-processed custom video in [here](https://drive.google.com/file/d/1f_SyuVosbOftTPDMYic7ySXBeLrXbMQk/view?usp=sharing).
+* We provide an example of pre-processed custom video in [here](https://drive.google.com/file/d/1YGJZWWpw_R63HiZu65smV6Lrksqa6EOu/view?usp=sharing).
 
 ## NeuMan videos
 * You can download original NeuMan data from [here](https://github.com/apple/ml-neuman).
