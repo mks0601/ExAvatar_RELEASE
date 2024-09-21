@@ -262,11 +262,6 @@ class Model(nn.Module):
             offset = -flame_mesh_wo_pose_wo_expr.mean(1) + smplx_mesh_wo_pose_wo_expr[:,smpl_x.face_vertex_idx,:].mean(1)
             flame_mesh_wo_pose_wo_expr = flame_mesh_wo_pose_wo_expr + offset[:,None,:]
             
-            # face unwrap to uv space
-            face_texture, face_texture_mask = self.xy2uv(data['img_face'], flame_mesh_cam, flame.face, data['cam_param_face'])
-            face_texture = face_texture * flame.uv_mask[None,None,:,:] * face_valid[:,None,None,None]
-            face_texture_mask = face_texture_mask * flame.uv_mask[None,None,:,:] * face_valid[:,None,None,None]
-
             # outputs
             out = {}
             out['smplx_mesh_cam'] = smplx_mesh_cam
@@ -277,8 +272,6 @@ class Model(nn.Module):
             out['smplx_mesh_wo_pose_wo_expr'] = smplx_mesh_wo_pose_wo_expr
             out['smplx_mesh_wo_pose_wo_expr_wo_fo'] = smplx_mesh_wo_pose_wo_expr_wo_fo
             out['flame_mesh_wo_pose_wo_expr'] = flame_mesh_wo_pose_wo_expr
-            out['face_texture'] = face_texture
-            out['face_texture_mask'] = face_texture_mask
             return loss, out
  
 def get_model():

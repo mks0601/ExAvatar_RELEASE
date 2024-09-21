@@ -90,9 +90,11 @@ class NeuMan(torch.utils.data.Dataset):
         with open(osp.join(self.root_path, 'flame_init', 'shape_param.json')) as f:
             flame_shape_param = torch.FloatTensor(json.load(f))
 
-        frame_idx_list = []
-        for frame_idx in img_paths.keys():
-            frame_idx_list.append(frame_idx)
+        if cfg.use_train_split:
+            f = open(osp.join(self.root_path, 'train_split.txt'))
+            frame_idx_list = [int(x[:-5]) for x in f.readlines()]
+        else:
+            frame_idx_list = list(img_paths.keys())
 	
         return cam_param, img_paths, kpts, smplx_params, flame_params, flame_shape_param, frame_idx_list
 

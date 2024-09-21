@@ -32,13 +32,14 @@ class Custom(torch.utils.data.Dataset):
 
     def load_data(self):
         cam_params, img_paths, kpts, smplx_params, flame_params = {}, {}, {}, {}, {}
-        frame_idx_list = []
 
         # read frame idxs
-        with open(osp.join(self.root_path, 'frame_list_all.txt')) as f:
-            lines = f.readlines()
-        for frame_idx in lines:
-            frame_idx_list.append(int(frame_idx))
+        if cfg.use_train_split:
+            f = open(osp.join(self.root_path, 'frame_list_train.txt'))
+            frame_idx_list = [int(x) for x in f.readlines()]
+        else:
+            f = open(osp.join(self.root_path, 'frame_list_all.txt'))
+            frame_idx_list = [int(x) for x in f.readlines()]
         
         # check if camera parameters from COLMAP are available
         if osp.isfile(osp.join(self.root_path, 'sparse', 'cameras.txt')) and osp.isfile(osp.join(self.root_path, 'sparse', 'images.txt')):

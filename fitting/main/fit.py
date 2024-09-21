@@ -62,7 +62,6 @@ def main():
     
     for epoch in range(cfg.end_epoch):
         cfg.set_itr_opt_num(epoch)
-        face_texture_save, face_texture_mask_save = 0, 0
 
         for itr_data, data in enumerate(trainer.batch_generator):
             batch_size = data['img_orig'].shape[0]
@@ -134,7 +133,7 @@ def main():
             # save
             if epoch != (cfg.end_epoch-1):
                 continue
-            save_root_path = osp.join(cfg.result_dir, cfg.subject_id, 'smplx_optimized')
+            save_root_path = osp.join(cfg.result_dir, 'smplx_optimized')
             os.makedirs(save_root_path, exist_ok=True)
             smplx_mesh_cam = out['smplx_mesh_cam'].detach().cpu()
             smplx_mesh_cam_wo_jo = out['smplx_mesh_cam_wo_jo'].detach().cpu()
@@ -144,8 +143,6 @@ def main():
             smplx_mesh_wo_pose_wo_expr = out['smplx_mesh_wo_pose_wo_expr'].detach().cpu()
             smplx_mesh_wo_pose_wo_expr_wo_fo = out['smplx_mesh_wo_pose_wo_expr_wo_fo'].detach().cpu()
             flame_mesh_wo_pose_wo_expr = out['flame_mesh_wo_pose_wo_expr'].detach().cpu()
-            face_texture = out['face_texture'].detach().cpu().numpy()
-            face_texture_mask = out['face_texture_mask'].detach().cpu().numpy()
             for i in range(batch_size):
                 frame_idx = int(data['frame_idx'][i])
                 
@@ -157,21 +154,13 @@ def main():
                 save_path = osp.join(save_root_path, 'meshes')
                 os.makedirs(save_path, exist_ok=True)
                 save_ply(osp.join(save_path, str(frame_idx) + '_smplx.ply'), torch.FloatTensor(smplx_mesh_cam[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                #save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_jo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                #save_ply(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.ply'), torch.FloatTensor(smplx_mesh_cam_wo_fo[i]).contiguous(), torch.IntTensor(smpl_x.face).contiguous())
-                #save_ply(osp.join(save_path, str(frame_idx) + '_flame.ply'), torch.FloatTensor(flame_mesh_cam[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
+                save_ply(osp.join(save_path, str(frame_idx) + '_flame.ply'), torch.FloatTensor(flame_mesh_cam[i]).contiguous(), torch.IntTensor(flame.face).contiguous())
 
                 # render
                 save_path = osp.join(save_root_path, 'renders')
                 os.makedirs(save_path, exist_ok=True)
                 render_smplx = render_mesh(smplx_mesh_cam[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
                 cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx.jpg'), render_smplx)
-                #render_smplx_wo_jo = render_mesh(smplx_mesh_cam_wo_jo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_jo.jpg'), render_smplx_wo_jo)
-                #render_smplx_wo_fo = render_mesh(smplx_mesh_cam_wo_fo[i].numpy(), smpl_x.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_smplx_wo_fo.jpg'), render_smplx_wo_fo)
-                #render_flame = render_mesh(flame_mesh_cam[i].numpy(), flame.face, {'focal': data['cam_param']['focal'][i].numpy(), 'princpt': data['cam_param']['princpt'][i].numpy()}, data['img_orig'][i].numpy()[:,:,::-1], 1.0)
-                #cv2.imwrite(osp.join(save_path, str(frame_idx) + '_flame.jpg'), render_flame)
 
                 # smplx parameter
                 save_path = osp.join(save_root_path, 'smplx_params')
@@ -203,18 +192,6 @@ def main():
                     with open(osp.join(save_root_path, 'locator_offset.json'), 'w') as f:
                         json.dump(_locator_offset.detach().cpu().numpy().tolist(), f)
 
-                # face unwrapped texture
-                face_texture_save += face_texture[i]
-                face_texture_mask_save += face_texture_mask[i]
-
-        # face unwrapped texture
-        if epoch != (cfg.end_epoch-1):
-            continue
-        face_texture = face_texture_save / (face_texture_mask_save + 1e-4)
-        face_texture_mask = (face_texture_mask_save > 0).astype(np.uint8)
-        cv2.imwrite(osp.join(save_root_path, 'face_texture.png'), face_texture.transpose(1,2,0)[:,:,::-1]*255)
-        cv2.imwrite(osp.join(save_root_path, 'face_texture_mask.png'), face_texture_mask.transpose(1,2,0)[:,:,::-1]*255)
-    
     # video
     save_path = osp.join(save_root_path, '..', 'smplx_optimized.mp4')
     video_shape = cv2.imread(glob(osp.join(save_root_path, 'renders', '*.jpg'))[0]).shape[:2] # height, width

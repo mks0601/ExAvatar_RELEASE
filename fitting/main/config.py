@@ -32,8 +32,11 @@ class Config:
     result_dir = osp.join(output_dir, 'result')
     human_model_path = osp.join('..', 'common', 'utils', 'human_model_files')
 
-    def set_args(self, subject_id):
+    def set_args(self, subject_id, use_train_split=False):
         self.subject_id = subject_id
+        self.use_train_split = use_train_split
+        self.result_dir = osp.join(self.result_dir, subject_id)
+        os.makedirs(self.result_dir, exist_ok=True)
     
     def set_itr_opt_num(self, epoch):
         if epoch == 0:

@@ -38,7 +38,7 @@ class FLAME(object):
         self.uv_mask = self.make_uv_mask()
    
     def load_texture_model(self):
-        texture = dict(np.load(osp.join(cfg.human_model_path, 'flame', 'FLAME_texture.npz'), allow_pickle=True, encoding='latin1'))
+        texture = np.load(osp.join(cfg.human_model_path, 'flame', 'FLAME_texture.npz'))
         vertex_uv, face_uv = texture['vt'], texture['ft'].astype(np.int64)
         vertex_uv[:,1] = 1 - vertex_uv[:,1]
         return vertex_uv, face_uv

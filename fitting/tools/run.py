@@ -64,6 +64,15 @@ cmd = 'mv ' + osp.join('..', 'output', 'result', subject_id, '*') + ' ' + osp.jo
 print(cmd)
 os.system(cmd)
 
+# unwrap textures of FLAME
+os.chdir('../main')
+cmd = 'python unwrap.py --subject_id ' + subject_id
+print(cmd)
+os.system(cmd)
+os.chdir('../tools')
+cmd = 'mv ' + osp.join('..', 'output', 'result', subject_id, 'unwrapped_textures', '*') + ' ' + osp.join(root_path, 'smplx_optimized', '.')
+os.system(cmd)
+
 # smooth SMPLX
 cmd = 'python smooth_smplx_params.py --root_path ' + root_path
 print(cmd)
