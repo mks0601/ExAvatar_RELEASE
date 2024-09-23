@@ -132,7 +132,7 @@ class Trainer(Base):
 
         if cfg.continue_train:
             start_epoch = ckpt['epoch'] + 1
-            optimizer.load_state_dict(ckpt['optimizer'], strict=False)
+            #optimizer.load_state_dict(ckpt['optimizer'], strict=False)
         else:
             start_epoch = 0
         model.train()
