@@ -19,7 +19,7 @@ For more high-resolution demo videos, please visit our <A href="https://mks0601.
 2. Then, go to [here](./avatar) to create and animate the avatar.
 
 ## Creating and animating avatars from [X-Humans dataset](https://skype-line.github.io/projects/X-Avatar/)
-* Go to [here](https://github.com/mks0601/ExAvatar_RELEASE/blob/X-Humans/README.md)
+* Go to [here](https://github.com/mks0601/ExAvatar_RELEASE/tree/X-Humans)
 
 ## Reference
 ```
