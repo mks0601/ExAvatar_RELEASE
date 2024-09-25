@@ -14,10 +14,12 @@ Yes, it's me, Gyeongsik in the video :), taken in front of my apartment with my 
 For more high-resolution demo videos, please visit our <A href="https://mks0601.github.io/ExAvatar">website</A>.
 </p>
 
-
-## Creating and animating avatars
+## Creating and animating avatars from a phone scan
 1. To create an avatar, you first need to fit SMPL-X to a video with a single person. Go to [here](./fitting/).
 2. Then, go to [here](./avatar) to create and animate the avatar.
+
+## Creating and animating avatars from [X-Humans dataset](https://skype-line.github.io/projects/X-Avatar/)
+* Go to [here](https://github.com/mks0601/ExAvatar_RELEASE/blob/X-Humans/README.md)
 
 ## Reference
 ```
