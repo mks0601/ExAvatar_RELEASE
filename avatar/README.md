@@ -69,7 +69,7 @@ ${ROOT}
 ## Animation
 * Set `dataset` in `main/config.py`.
 * Go to `main` folder and run `python animation.py --subject_id $SUBJECT_ID --test_epoch 4 --motion_path $PATH` if you want to use an avatar in `output/model_dump/$SUBJECT_ID`. `$PATH` should contain SMPL-X parameters to animate the avatar. You can prepare `$PATH` with [here](../fitting).
-* To render the avatar from rotating camera, run `python animate_rot_cam.py --subject_id $SUBJECT_ID --test_epoch 4 --motion_path $PATH`.
+* To render the avatar from rotating camera, run `python animate_view_rot.py --subject_id $SUBJECT_ID --test_epoch 4 --motion_path $PATH`.
 * We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://drive.google.com/drive/folders/1ApDtoyqrcP2r2ZvX24eptmSefJvw_no5?usp=sharing).
 
 ## Test and evaluation (NeuMan dataset)
