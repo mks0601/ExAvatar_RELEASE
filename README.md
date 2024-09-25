@@ -1,5 +1,4 @@
-# Creating an avatar from a phone scan
-
+# Creating an avatar from [X-Humans dataset](https://skype-line.github.io/projects/X-Avatar/)
 
 * This branch includes **avatar creation pipeline and animation function**.
 * This code includes **avatar creation pipeline and animation function** only when exact foreground mask is given like [X-Humans dataset](https://skype-line.github.io/projects/X-Avatar/).
