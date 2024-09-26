@@ -48,7 +48,11 @@ def main():
     tester.smplx_params = None
     tester._make_model()
     
-    motion_name = args.motion_path.split('/')[-1]
+    motion_path = args.motion_path
+    if motion_path[-1] == '/':
+        motion_name = motion_path[:-1].split('/')[-1]
+    else:        
+        motion_name = motion_path.split('/')[-1]
     frame_idx_list = sorted([int(x.split('/')[-1][:-5]) for x in glob(osp.join(args.motion_path, 'smplx_optimized', 'smplx_params_smoothed', '*.json'))])
     render_shape = cv2.imread(osp.join(args.motion_path, 'frames', str(frame_idx_list[0]) + '.png')).shape[:2]
     video_out = cv2.VideoWriter(motion_name + '.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 60, (render_shape[1]*3, render_shape[0]))
