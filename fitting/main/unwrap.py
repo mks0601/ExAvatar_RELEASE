@@ -39,7 +39,7 @@ def main():
             elif isinstance(data[k], dict):
                 for kk in data[k].keys():
                     data[k][kk] = data[k][kk].cuda()
-        batch_size = data['img'].shape[0]
+        batch_size = data['img_face'].shape[0]
 
         flame_mesh_cam_list = []
         smplx_inputs = {'shape': [], 'expr': [], 'trans': [], 'joint_offset': [], 'locator_offset': []}
