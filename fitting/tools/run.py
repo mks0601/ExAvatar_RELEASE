@@ -30,7 +30,7 @@ for img_path in img_path_list:
         result = os.system(cmd)
         if (result != 0):
             print('something bad happened when removing unnecessary frames. terminate the script.')
-            sys.exist()
+            sys.exit()
 
 # make camera parameters
 cmd = 'python make_virtual_cam_params.py --root_path ' + root_path
@@ -38,7 +38,7 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when making the virtual camera parameters. terminate the script.')
-    sys.exist()
+    sys.exit()
 
 # DECA (get initial FLAME parameters)
 os.chdir('./DECA')
@@ -47,7 +47,7 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when running DECA. terminate the script.')
-    sys.exist()
+    sys.exit()
 os.chdir('..')
 
 # Hand4Whole (get initial SMPLX parameters)
@@ -57,7 +57,7 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when running Hand4Whole. terminate the script.')
-    sys.exist()
+    sys.exit()
 os.chdir('../../')
 
 # mmpose (get 2D whole-body keypoints)
@@ -67,7 +67,7 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when running mmpose. terminate the script.')
-    sys.exist()
+    sys.exit()
 os.chdir('..')
 
 # fit SMPLX
@@ -77,14 +77,14 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when fitting. terminate the script.')
-    sys.exist()
+    sys.exit()
 os.chdir('../tools')
 cmd = 'mv ' + osp.join('..', 'output', 'result', subject_id, '*') + ' ' + osp.join(root_path, '.')
 print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when moving the fitted files to root_path. terminate the script.')
-    sys.exist()
+    sys.exit()
 
 # unwrap textures of FLAME
 os.chdir('../main')
@@ -93,13 +93,13 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when unwrapping the face images to FLAME UV texture. terminate the script.')
-    sys.exist()
+    sys.exit()
 os.chdir('../tools')
 cmd = 'mv ' + osp.join('..', 'output', 'result', subject_id, 'unwrapped_textures', '*') + ' ' + osp.join(root_path, 'smplx_optimized', '.')
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when moving the unwrapped FLAME UV texture to root_path. terminate the script.')
-    sys.exist()
+    sys.exit()
 
 # smooth SMPLX
 cmd = 'python smooth_smplx_params.py --root_path ' + root_path
@@ -107,5 +107,5 @@ print(cmd)
 result = os.system(cmd)
 if (result != 0):
     print('something bad happened when smoothing smplx parameters. terminate the script.')
-    sys.exist()
+    sys.exit()
 
