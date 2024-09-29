@@ -36,16 +36,15 @@ for output_path in output_path_list:
     with open(output_path) as f:
         out = json.load(f)
 
-    idx_save, kpt_save = None, None
+    kpt_save = None
     for i in range(len(out['instance_info'])):
         xy = np.array(out['instance_info'][i]['keypoints'], dtype=np.float32).reshape(-1,2)
         score = np.array(out['instance_info'][i]['keypoint_scores'], dtype=np.float32).reshape(-1,1)
         kpt = np.concatenate((xy, score),1) # x, y, score
         if (kpt_save is None) or (kpt_save[:,2].mean() < kpt[:,2].mean()):
-            idx_save = i
             kpt_save = kpt
     with open(osp.join(root_path, 'keypoints_whole_body', str(frame_idx) + '.json'), 'w') as f:
-        json.dump(kpt.tolist(), f)
+        json.dump(kpt_save.tolist(), f)
 
 # add original image and frame index to the video
 output_path_list = glob(osp.join(output_root, '*.png'))
