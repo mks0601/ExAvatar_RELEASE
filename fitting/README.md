@@ -55,11 +55,13 @@ ${ROOT}
 * Go to `tools` folder and clone [DECA](https://github.com/yfeng95/DECA), [Hand4Whole](https://github.com/mks0601/Hand4Whole_RELEASE), [mmpose](https://github.com/open-mmlab/mmpose), [segment-anything](https://github.com/facebookresearch/segment-anything), and [Depth-Anything-V2](https://github.com/DepthAnything/Depth-Anything-V2). Install them. For the `mmpose`, we use `rtmdet_m_8xb32-100e_coco-obj365-person-235e8209.pth` and `dw-ll_ucoco_384.pth`. For the `segment-anything`, we use `sam_vit_h_4b8939.pth`. For the `Depth-Anything-V2`, we use `depth_anything_v2_vitl.pth`. Please intsall [COLMAP](https://colmap.github.io/cli.html) with `sudo apt-get install colmap`.
 * Run `python copy_code.py` to copy customized code in `code_to_copy` to the above repos.
 * Place your video at `data/Custom/data/$SUBJECT_ID/video.mp4`.
-* Go to `tools` folder and run `python extract_frames.py --root_path ../data/Custom/data/$SUBJECT_ID` to extract frames.
+* Go to `tools` folder and run `python extract_frames.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID` to extract frames.
 * Go to `data/Custom/data/$SUBJECT_ID` and make `frame_list_all.txt`, which includes frame indices to use for the fitting. We recommend to use frames where most of human is visible without being truncated. Each line should contain a frame index and a new line, for example '1\n'.
 * Likewise, prepare `frame_list_train.txt` and `frame_list_test.txt` in the same way as `frame_list_all.txt`. Each will be used for training and evaluating the avatar, respectively. We recommend making them in 5 fps (assuming the original video and `frame_list_all.txt` are in 30 fps) to make the avatar creation faster.
 * Set `dataset = 'Custom'` in `main/config.py`.
-* Go to `tools` folder and run `python run.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID`. This will output virtual camera parameters, initial FLAME parameters, initial SMPL-X parameters, and 2D whole-body keypoints, optimized/smoothed SMPL-X parameters, and unwrapped face texture at `data/Custom/data/$SUBJECT_ID`.
+* (Camera option 1) If you want to make this video to create an avatar and the camera is moving, go to `tools` foler and run `python run.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID --use_colmap`. In this way, we get camera parameters from COLMAP.
+* (Camera option 2) If 1) you want to make this video to create an avatar and the camera is static or 2) you want to get smplx parameters to animate your avatar (doesn't matter the camera is moving), go to `tools` folder and run `python run.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID`. In this way, we get virtual camera parameters.
+* `run.py` will output camera parameters, initial FLAME parameters, initial SMPL-X parameters, and 2D whole-body keypoints, optimized/smoothed SMPL-X parameters, and unwrapped face texture at `data/Custom/data/$SUBJECT_ID`.
 * We provide an example of pre-processed custom video in [here](https://drive.google.com/file/d/1YGJZWWpw_R63HiZu65smV6Lrksqa6EOu/view?usp=sharing).
 
 ## NeuMan videos

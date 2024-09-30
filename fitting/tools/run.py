@@ -7,6 +7,7 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--root_path', type=str, dest='root_path')
+    parser.add_argument('--use_colmap', dest='use_colmap', action='store_true')
     args = parser.parse_args()
     assert args.root_path, "Please set root_path."
     return args
@@ -33,12 +34,21 @@ for img_path in img_path_list:
             sys.exit()
 
 # make camera parameters
-cmd = 'python make_virtual_cam_params.py --root_path ' + root_path
-print(cmd)
-result = os.system(cmd)
-if (result != 0):
-    print('something bad happened when making the virtual camera parameters. terminate the script.')
-    sys.exit()
+if args.use_colmap:
+    os.chdir('./COLMAP')
+    cmd = 'python run_colmap.py --root_path ' + root_path
+    print(cmd)
+    result = os.system(cmd)
+    if (result != 0):
+        print('something bad happened when running COLMAP to get camera parameters. terminate the script.')
+        sys.exit()
+else:
+    cmd = 'python make_virtual_cam_params.py --root_path ' + root_path
+    print(cmd)
+    result = os.system(cmd)
+    if (result != 0):
+        print('something bad happened when making the virtual camera parameters. terminate the script.')
+        sys.exit()
 
 # DECA (get initial FLAME parameters)
 os.chdir('./DECA')
