@@ -53,8 +53,7 @@ for frame_idx in tqdm(frame_idx_list):
     # load image
     img_path = osp.join(root_path, 'frames', str(frame_idx) + '.png')
     img = cv2.imread(img_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+    
     # load keypoints
     kpt_path = osp.join(root_path, 'keypoints_whole_body', str(frame_idx) + '.json')
     with open(kpt_path) as f:
@@ -64,7 +63,8 @@ for frame_idx in tqdm(frame_idx_list):
     bbox[2:] += bbox[:2] # xywh -> xyxy
 
     # use keypoints as prompts
-    predictor.set_image(img)
+    img_input = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    predictor.set_image(img_input)
     masks, scores, logits = predictor.predict(point_coords=kpt, point_labels=np.ones_like(kpt[:,0]), box=bbox[None,:], multimask_output=False)
     mask_input = logits[np.argmax(scores), :, :]
     masks, _, _ = predictor.predict(point_coords=kpt, point_labels=np.ones_like(kpt[:,0]), box=bbox[None,:], multimask_output=False, mask_input=mask_input[None])
