@@ -32,7 +32,7 @@ for frame_idx in frame_idx_list:
     cv2.imwrite(osp.join(colmap_path, 'images', 'image' + str(frame_idx) + '.jpg'), img)
 
 # run COLMAP
-cmd = 'colmap feature_extractor --database_path ' + osp.join(colmap_path, 'database.db') + ' --image_path ' + osp.join(colmap_path, 'images')
+cmd = 'colmap feature_extractor --database_path ' + osp.join(colmap_path, 'database.db') + ' --image_path ' + osp.join(colmap_path, 'images') + ' --ImageReader.camera_model PINHOLE --ImageReader.single_camera 1'
 os.system(cmd)
 cmd = 'colmap sequential_matcher --database_path ' + osp.join(colmap_path, 'database.db')
 os.system(cmd)
