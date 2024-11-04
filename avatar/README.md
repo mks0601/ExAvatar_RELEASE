@@ -73,6 +73,7 @@ ${ROOT}
 * We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://drive.google.com/drive/folders/1ApDtoyqrcP2r2ZvX24eptmSefJvw_no5?usp=sharing).
 
 ## Test and evaluation (NeuMan dataset)
+* Before testing, please make sure that you placed the correct SMPLX shape parameter, joint offset, and face offset at `../data/$DATASET/data/$SUBJECT_ID/smplx_optimized`. This should be the same one that you used to train your avatar. For the provided ExAvatar checkpoints, please place our pre-processed ones.
 * For the evaluation on the NeuMan dataset, we optimize SMPL-X paraemeters of testing frames with image loss while fixing the pre-trained avatars following [1](https://github.com/aipixel/GaussianAvatar/issues/14), [2](https://github.com/mikeqzy/3dgs-avatar-release/issues/21), and [Section 4 B Evaluation](https://arxiv.org/pdf/2106.13629). This is specified in [here](https://github.com/mks0601/ExAvatar_RELEASE/blob/5ef87f4db2a91630cf8061ff43e63c7fc934b4a6/avatar/main/model.py#L20).
 * Go to `tools` folder and run `python prepare_fit_pose_to_test.py --root_path ../output/model_dump/$SUBJECT_ID` if you want to use an avatar in `output/model_dump/$SUBJECT_ID`. It simply sets `epoch` of a checkpoint to 0 and save it to `'output/model_dump/$SUBJECT_ID' + '_fit_pose_to_test'`.
 * Set `dataset='NeuMan'` in `main/config.py`.
@@ -81,8 +82,8 @@ ${ROOT}
 * For the evaluation of the NeuMan dataset, go to `tools` folder and run `python eval_neuman.py --output_path '../output/result/$SUBJECT_ID' + '_fit_pose_to_test' --subject_id $SUBJECT_ID`. If you want to include background pixels during the evaluation, add `--include_bkg`.
 
 ## Pre-trained checkpoints
-* Gyeongsik's avatar [Download](https://drive.google.com/drive/folders/1tLamFJm9-VFXHDcTyCGE8Ar2q0pbkZg3?usp=sharing)
-* NeuMan's avatar [Download](https://drive.google.com/drive/folders/1y2c1kYaPV_JRWD1jDDgNceLKwIv6e5gf?usp=sharing)
+* Gyeongsik's avatar [Download](https://drive.google.com/drive/folders/1tLamFJm9-VFXHDcTyCGE8Ar2q0pbkZg3?usp=sharing) and ID parameters [Download](https://drive.google.com/file/d/1YGJZWWpw_R63HiZu65smV6Lrksqa6EOu/view?usp=sharing)
+* NeuMan's avatar [Download](https://drive.google.com/drive/folders/1y2c1kYaPV_JRWD1jDDgNceLKwIv6e5gf?usp=sharing) and ID parameters [Download](https://drive.google.com/drive/folders/15-V9EG21hT4pVhuBdHY3-lpvKjCuHbEU?usp=sharing)
 
 ## Reference
 ```
