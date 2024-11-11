@@ -34,7 +34,7 @@ def main():
 
         # forward
         with torch.no_grad():
-            out = tester.model(data, None, 'test')
+            out = tester.model(data, 'test')
         
         # save
         human_img = out['human_img'].cpu().numpy()
