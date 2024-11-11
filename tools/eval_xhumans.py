@@ -33,7 +33,7 @@ for capture_path in capture_path_list:
     frame_idxs = sorted([int(x.split('/')[-1][6:-4]) for x in glob(osp.join(capture_path, 'render', 'image', '*.png'))])
     
     for frame_idx in frame_idxs:
-        out_path = osp.join(output_path, subject_id, 'test', capture_id, str(frame_idx) + '_human_refined.png')
+        out_path = osp.join(output_path, 'test', capture_id, str(frame_idx) + '_human_refined.png')
         out = cv2.imread(out_path)[:,:,::-1]/255.
         out = torch.FloatTensor(out).permute(2,0,1)[None,:,:,:].cuda()
 
