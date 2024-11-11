@@ -22,13 +22,8 @@ class XHumans(torch.utils.data.Dataset):
 
     def load_data(self):
         img_paths, depthmap_paths, smplx_params, cam_params, frame_idx_list = {}, {}, {}, {}, []
-        
-        if cfg.fit_pose_to_test:
-            data_split = 'test'
-        else:
-            data_split = self.data_split
 
-        capture_path_list = glob(osp.join(self.root_path, data_split, '*'))
+        capture_path_list = glob(osp.join(self.root_path, self.data_split, '*'))
         for capture_path in capture_path_list:
             capture_id = capture_path.split('/')[-1]
             
