@@ -85,6 +85,14 @@ ${ROOT}
 * Gyeongsik's avatar [Download](https://drive.google.com/drive/folders/1tLamFJm9-VFXHDcTyCGE8Ar2q0pbkZg3?usp=sharing) and ID parameters [Download](https://drive.google.com/file/d/1YGJZWWpw_R63HiZu65smV6Lrksqa6EOu/view?usp=sharing)
 * NeuMan's avatar [Download](https://drive.google.com/drive/folders/1y2c1kYaPV_JRWD1jDDgNceLKwIv6e5gf?usp=sharing) and ID parameters [Download](https://drive.google.com/drive/folders/15-V9EG21hT4pVhuBdHY3-lpvKjCuHbEU?usp=sharing)
 
+## Troubleshoots
+Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)]
+A. Checkout renderings in `data/Custom/data/flame_init/renders`. Some people run the fitting without preparing DECA's results.
+
+Q. RuntimeError: indices should be either on cpu or on the same device as the indexted tensor
+A. Run `export CUDA_VISIBLE_DEVICES=0` before running the fitting.
+
+
 ## Reference
 ```
 @inproceedings{moon2024exavatar,
