@@ -75,6 +75,15 @@ ${ROOT}
 * We provide pre-processed XHumans data in [here](https://drive.google.com/drive/folders/1TalHPkbohPoTPNawVi2gbj6M8nAyYAE9?usp=sharing).
 * We used the same pre-processing stage of the above one for the custom videos after setting `dataset = 'XHumans'` in `main/config.py`.
 
+## Troubleshoots
+Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)]
+
+A. Checkout renderings in `data/Custom/data/flame_init/renders`. Some people run the fitting without preparing DECA's results.
+
+
+Q. RuntimeError: indices should be either on cpu or on the same device as the indexted tensor
+
+A. Run `export CUDA_VISIBLE_DEVICES=0` before running the fitting.
 
 ## Reference
 ```
