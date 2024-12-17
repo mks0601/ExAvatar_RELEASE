@@ -20,6 +20,9 @@ root_path = args.root_path
 
 # run DECA
 assert osp.isfile('./data/deca_model.tar'), 'please download deca_model.tar with fetch_data.sh'
+assert osp.isfile('./data/FLAME2020/female_model.pkl'), 'please download female_model.pkl with fetch_data.sh'
+assert osp.isfile('./data/FLAME2020/male_model.pkl'), 'please download male_model.pkl with fetch_data.sh'
+assert osp.isfile('./data/generic_model.pkl'), 'please download generic_model.pkl with fetch_data.sh'
 output_save_path = './flame_parmas_out'
 os.system('rm -rf ' + output_save_path)
 os.makedirs(output_save_path, exist_ok=True)
