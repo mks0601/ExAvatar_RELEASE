@@ -76,7 +76,7 @@ ${ROOT}
 * We used the same pre-processing stage of the above one for the custom videos after setting `dataset = 'XHumans'` in `main/config.py`.
 
 ## Troubleshoots
-Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)]
+Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)] [[issue39](https://github.com/mks0601/ExAvatar_RELEASE/issues/39)]
 
 A. Checkout renderings in `data/Custom/data/flame_init/renders`. Some people run the fitting without preparing DECA's results.
 
