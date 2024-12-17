@@ -52,6 +52,7 @@ out_path = osp.join(root_path, 'depthmaps')
 os.makedirs(out_path, exist_ok=True)
 
 # run DepthAnything-V2
+assert osp.isfile('./checkpoints/depth_anything_v2_vitl.pth'), 'Please download depth_anything_v2_vitl.pth'
 cmd = 'python run.py --encoder vitl --img-path ' + osp.join(root_path, 'frames') + '  --outdir ' + out_path + ' --pred-only --grayscale'
 os.system(cmd)
 
