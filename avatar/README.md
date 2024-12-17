@@ -86,7 +86,7 @@ ${ROOT}
 * NeuMan's avatar [Download](https://drive.google.com/drive/folders/1y2c1kYaPV_JRWD1jDDgNceLKwIv6e5gf?usp=sharing) and ID parameters [Download](https://drive.google.com/drive/folders/15-V9EG21hT4pVhuBdHY3-lpvKjCuHbEU?usp=sharing)
 
 ## Troubleshoots
-Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)]
+Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)] [[issue39](https://github.com/mks0601/ExAvatar_RELEASE/issues/39)]
 
 A. Checkout renderings in `data/Custom/data/flame_init/renders`. Some people run the fitting without preparing DECA's results.
 
