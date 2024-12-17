@@ -40,6 +40,7 @@ os.makedirs(out_path, exist_ok=True)
 # load SAM 
 ckpt_path = './sam_vit_h_4b8939.pth'
 model_type = "vit_h"
+assert osp.isfile(ckpt_path), 'Please download sam_vit_h_4b8939.pth'
 sam = sam_model_registry[model_type](checkpoint=ckpt_path).cuda()
 predictor = SamPredictor(sam)
 
