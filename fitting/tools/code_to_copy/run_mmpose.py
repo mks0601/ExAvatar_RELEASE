@@ -23,6 +23,8 @@ output_root = './vis_results'
 os.system('rm -rf ' + output_root)
 
 # run mmpose
+assert osp.isfile('./dw-ll_ucoco_384.pth'), 'Please download dw-ll_ucoco_384.pth'
+assert osp.isfile('./rtmdet_m_8xb32-100e_coco-obj365-person-235e8209.pth'), 'Please download rtmdet_m_8xb32-100e_coco-obj365-person-235e8209.pth'
 cmd = 'python demo/topdown_demo_with_mmdet.py demo/mmdetection_cfg/rtmdet_m_640-8xb32_coco-person.py rtmdet_m_8xb32-100e_coco-obj365-person-235e8209.pth configs/wholebody_2d_keypoint/rtmpose/ubody/rtmpose-l_8xb32-270e_coco-ubody-wholebody-384x288.py dw-ll_ucoco_384.pth  --input ' + osp.join(root_path, 'frames') + ' --output-root ' + output_root + ' --save-predictions'
 print(cmd)
 os.system(cmd)
