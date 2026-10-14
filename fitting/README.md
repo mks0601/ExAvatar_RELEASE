@@ -62,12 +62,12 @@ ${ROOT}
 * (Camera option 1) If you want to make this video to create an avatar and the camera is moving, go to `tools` foler and run `python run.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID --use_colmap`. In this way, we get camera parameters from COLMAP.
 * (Camera option 2) If 1) you want to make this video to create an avatar and the camera is static or 2) you want to get smplx parameters to animate your avatar (doesn't matter the camera is moving), go to `tools` folder and run `python run.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID`. In this way, we get virtual camera parameters.
 * `run.py` will output camera parameters, initial FLAME parameters, initial SMPL-X parameters, and 2D whole-body keypoints, optimized/smoothed SMPL-X parameters, and unwrapped face texture at `data/Custom/data/$SUBJECT_ID`.
-* We provide an example of pre-processed custom video in [here](https://drive.google.com/file/d/1YGJZWWpw_R63HiZu65smV6Lrksqa6EOu/view?usp=sharing).
+* We provide an example of pre-processed custom video in [here](https://1drv.ms/u/c/3971ed61d3817b59/IQDaZOpoQPlmQLlZmv4gotDVAdY7KPQI7eDvA-H_btOIKwo?e=K5s09F).
 
 ## NeuMan videos
 * You can download original NeuMan data from [here](https://github.com/apple/ml-neuman).
-* We provide pre-processed Neuman data in [here](https://drive.google.com/drive/folders/15-V9EG21hT4pVhuBdHY3-lpvKjCuHbEU?usp=sharing).
-* We provide train/test/validation split files in [here](https://drive.google.com/drive/folders/1L5KC4QIRX_ljQ_vyrIXV11FgynnuCDb8?usp=sharing), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
+* We provide pre-processed Neuman data in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4?e=mv3lpI).
+* We provide train/test/validation split files in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgCAtQoufPyNR6q65xlO-aFtAVk0235HN0YGzppyhjGJ73Q?e=TTnP9A), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
 * We used the same pre-processing stage of the above one for the custom videos after setting `dataset = 'NeuMan'` in `main/config.py`.
 
 ## XHumans videos
