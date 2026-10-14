@@ -56,7 +56,7 @@ ${ROOT}
 * Set `dataset='XHumans'` in `main/config.py`.
 * Go to `main` folder and run `python animation.py --subject_id $SUBJECT_ID --test_epoch 24 --motion_path $PATH` if you want to use an avatar in `output/model_dump/$SUBJECT_ID`. `$PATH` should contain SMPL-X parameters to animate the avatar. You can prepare `$PATH` with [here](../fitting).
 * To render the avatar from rotating camera, run `python animate_view_rot.py --subject_id $SUBJECT_ID --test_epoch 24 --motion_path $PATH`.
-* We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgD9O_tk91riQacjp4QHJrG5ASgDtwe_qMgPkqFPfKw2KEU?e=E0M8MW).
+* We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgD9O_tk91riQacjp4QHJrG5ASgDtwe_qMgPkqFPfKw2KEU).
 
 ## Test and evaluation
 * Set `dataset='XHumans'` in `main/config.py`.
@@ -64,7 +64,7 @@ ${ROOT}
 * For the evaluation of the X-Humans dataset, go to `tools` folder and run `python eval_xhumans.py --output_path ../output/result/$SUBJECT_ID --subject_id $SUBJECT_ID`.
 
 ## Pre-trained checkpoints
-* X-Humans' avatar [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgAVQxnG0xwvTbVwJ3xe-yD3AbgvFysVdJpyyp3BfMZnTzs?e=D3m28z)
+* X-Humans' avatar [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgAVQxnG0xwvTbVwJ3xe-yD3AbgvFysVdJpyyp3BfMZnTzs)
 
 ## Reference
 ```
