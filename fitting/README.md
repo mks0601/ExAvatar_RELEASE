@@ -67,7 +67,7 @@ ${ROOT}
 ## NeuMan videos
 * You can download original NeuMan data from [here](https://github.com/apple/ml-neuman).
 * We provide pre-processed Neuman data in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4).
-* We provide train/test/validation split files in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgCAtQoufPyNR6q65xlO-aFtAVk0235HN0YGzppyhjGJ73Q), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
+* We provide train/test/validation split files in [here](https://drive.google.com/drive/folders/1QJztYKjI9tC90U6mELwt-RF1V09LBqjW?usp=drive_link), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
 * We used the same pre-processing stage of the above one for the custom videos after setting `dataset = 'NeuMan'` in `main/config.py`.
 
 ## XHumans videos
