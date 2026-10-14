@@ -48,12 +48,12 @@ ${ROOT}
 * Go to `segment-anything` folder in `../fitting/tools` and run `python run_sam.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID` to obtain foreground masks.
 * (Background option 1) If background of your own video is static, we get background point cloud with monocular depth estimator. To this end, go to `Depth-Anything-V2` folder in `../fitting/tools` and run `python run_depth_anything.py --root_path $ROOT/data/Custom/data/$SUBJECT_ID`, which outputs `bkg_point_cloud.txt` at `data/Custom/data/$SUBJECT_ID`.
 * (Background option 2) If background of your own video is dynamic (like NeuMan videos), no worry. You already ran COLMAP when doing the fitting. You can proceed to next step.
-* We provide an example in [here](https://1drv.ms/u/c/3971ed61d3817b59/IQDaZOpoQPlmQLlZmv4gotDVAdY7KPQI7eDvA-H_btOIKwo?e=ysFDQP).
+* We provide an example in [here](https://1drv.ms/u/c/3971ed61d3817b59/IQDaZOpoQPlmQLlZmv4gotDVAdY7KPQI7eDvA-H_btOIKwo).
 
 ## Preprocessing of NeuMan videos
 * You can download original NeuMan data from [here](https://github.com/apple/ml-neuman).
-* We provide pre-processed Neuman data in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4?e=asa8FY).
-* We provide train/test/validation split files in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgCAtQoufPyNR6q65xlO-aFtAVk0235HN0YGzppyhjGJ73Q?e=g4WeAW), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
+* We provide pre-processed Neuman data in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4).
+* We provide train/test/validation split files in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgCAtQoufPyNR6q65xlO-aFtAVk0235HN0YGzppyhjGJ73Q), made following [the official code](https://github.com/apple/ml-neuman/blob/0149d258b2afe6ef65c91557bba9f874675871e4/data_io/neuman_helper.py#L149).
 * We used the same pre-processing stage of the above one for the custom videos.
 
 ## Train
@@ -70,7 +70,7 @@ ${ROOT}
 * Set `dataset` in `main/config.py`.
 * Go to `main` folder and run `python animation.py --subject_id $SUBJECT_ID --test_epoch 4 --motion_path $PATH` if you want to use an avatar in `output/model_dump/$SUBJECT_ID`. `$PATH` should contain SMPL-X parameters to animate the avatar. You can prepare `$PATH` with [here](../fitting).
 * To render the avatar from rotating camera, run `python animate_view_rot.py --subject_id $SUBJECT_ID --test_epoch 4 --motion_path $PATH`.
-* We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgD9O_tk91riQacjp4QHJrG5ASgDtwe_qMgPkqFPfKw2KEU?e=jWBUSK).
+* We provide SMPL-X parameters of several videos (examples of `$PATH`) in [here](https://1drv.ms/f/c/3971ed61d3817b59/IgD9O_tk91riQacjp4QHJrG5ASgDtwe_qMgPkqFPfKw2KEU).
 
 ## Test and evaluation (NeuMan dataset)
 * Before testing, please make sure that you placed the correct ID parameters(SMPLX shape parameter, joint offset, and face offset) at `../data/$DATASET/data/$SUBJECT_ID/smplx_optimized`. This should be the same one that you used to train your avatar. For the provided ExAvatar checkpoints, please place our pre-processed ones.
@@ -82,8 +82,8 @@ ${ROOT}
 * For the evaluation of the NeuMan dataset, go to `tools` folder and run `python eval_neuman.py --output_path '../output/result/$SUBJECT_ID' + '_fit_pose_to_test' --subject_id $SUBJECT_ID`. If you want to include background pixels during the evaluation, add `--include_bkg`.
 
 ## Pre-trained checkpoints
-* Gyeongsik's avatar [Download](https://1drv.ms/u/c/3971ed61d3817b59/IQAgS53BtyqeS5oKvudDPPgEATzkSCkT4qe-VWM44_MOdis?e=d2beZy) and ID parameters [Download](https://1drv.ms/u/c/3971ed61d3817b59/IQDaZOpoQPlmQLlZmv4gotDVAdY7KPQI7eDvA-H_btOIKwo?e=1cZpXl)
-* NeuMan's avatar [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgDi1l89nMyTTa9Iq3yfJEvxAV3Fz8UPu4p96vLf3uPHHns?e=bf0SME) and ID parameters [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4?e=NSsgGR)
+* Gyeongsik's avatar [Download](https://1drv.ms/u/c/3971ed61d3817b59/IQAgS53BtyqeS5oKvudDPPgEATzkSCkT4qe-VWM44_MOdis) and ID parameters [Download](https://1drv.ms/u/c/3971ed61d3817b59/IQDaZOpoQPlmQLlZmv4gotDVAdY7KPQI7eDvA-H_btOIKwo)
+* NeuMan's avatar [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgDi1l89nMyTTa9Iq3yfJEvxAV3Fz8UPu4p96vLf3uPHHns) and ID parameters [Download](https://1drv.ms/f/c/3971ed61d3817b59/IgC9jb8Wn2cmTYnyvzs5eHx_AdriY5s9TbjNTJS5xoJgBO4)
 
 ## Troubleshoots
 Q. Face of fitted smplx looks bad [[issue13](https://github.com/mks0601/ExAvatar_RELEASE/issues/13)] [[issue39](https://github.com/mks0601/ExAvatar_RELEASE/issues/39)]
